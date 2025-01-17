@@ -3,7 +3,7 @@
 and will make function to use add user services
 and will add elevatedbutton to add new user
 
-we will use these page when we click to any user on the home page will navigate here
+we will use these page when we click to the icon on the home page will navigate here
 -And after clicking to the navigation button *Navigator.pop* to return again to the home page
 will use shared preference in order to view and save the new user
 */
