@@ -82,7 +82,7 @@ class UserListPageState extends State<UserListPage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
           onPressed: (){} /// todo navigateToAddUser,
         ///todo child: Icon(Icons.add),
       ),
