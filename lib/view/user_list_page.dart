@@ -76,28 +76,20 @@ class UserListPageState extends State<UserListPage> {
       body: users.isEmpty
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-        itemCount: cachedUsers.length,
-        itemBuilder: (context, index) {
-          final user = cachedUsers[index];
-          return ListTile(
-              trailing: Icon(Icons.person),
-              leading: Text("${user.id}"),
-              title: Text(user.name),
-              subtitle: Text(user.email),
-              onTap: () {}
-            /// todo => Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (_) => EditUserPage(user: user),
-            //   ),
-            // ).then((value) => getUsers()),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
-          onPressed: (){} /// todo navigateToAddUser,
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                final user = users[index];
+                return UserItem(
+                  userModel: users[index],
+                );
+              },
+            ),
+      floatingActionButton:
+          FloatingActionButton(child: Icon(Icons.add), onPressed: () {}
 
-      ),
+              /// todo navigateToAddUser,
+              ///todo child: Icon(Icons.add),
+              ),
     );
   }
 }
