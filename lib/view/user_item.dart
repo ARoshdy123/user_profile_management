@@ -67,11 +67,11 @@ class UserItem extends StatelessWidget {
         trailing: Row(mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: () => editUser(context), // Call edit method
+              onPressed: () => editUser(context),
               icon: Icon(Icons.edit, color: Colors.blueAccent),
             ),
             IconButton(
-              onPressed: () => deleteUser(context), // Call delete method
+              onPressed: () => deleteUser(context),
               icon: Icon(Icons.delete, color: Colors.redAccent),
             ),
           ],

@@ -20,7 +20,7 @@ class UpdateUserPageState extends State<UpdateUserPage> {
   @override
   void initState() {
     super.initState();
-    // Initialize controllers with current user data
+
     _nameController = TextEditingController(text: widget.user.name);
     _emailController = TextEditingController(text: widget.user.email);
   }
@@ -28,14 +28,14 @@ class UpdateUserPageState extends State<UpdateUserPage> {
   Future<void> _updateUser() async {
     if (_formKey.currentState!.validate()) {
       Users updatedUser = Users(
-        id: widget.user.id, // Keep the same ID
+        id: widget.user.id,
         name: _nameController.text,
-        username: widget.user.username, // Preserve the username
+        username: widget.user.username,
         email: _emailController.text,
       );
 
       await _userService.updateUser(context, updatedUser);
-      Navigator.pop(context, true); // Notify parent to reload the list
+      Navigator.pop(context, true);
     }
   }
 

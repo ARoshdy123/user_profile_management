@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_profile_management/models/user_model.dart';
@@ -42,13 +41,13 @@ class _UserListPage1State extends State<UserListPage> {
         });
       }
 
-      // Attempt to load users from the API
+      // adding the user from api
       final loadedUsers = await _userService.getUsers(context);
       setState(() {
         users = loadedUsers;
       });
 
-      // Cache the newly loaded users
+      // update Cached users
       prefs.setString(
         "UserData",
         jsonEncode(loadedUsers.map((user) => user.toJson()).toList()),

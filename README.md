@@ -1,16 +1,22 @@
 # user_profile_management
 
-A new Flutter project.
-
+User Profile Management project designed to perform advanced user profile management, including CRUD functions. The app supports offline data caching and error handling.
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### API & Data Handling
+- `GET`: Fetch user profiles.
+- `POST`: Add new user profiles.
+- `PUT`: Update existing user profiles.
+- `DELETE`: Remove user profiles.
+- endpoint = "https://jsonplaceholder.typicode.com/users";
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Data handling**:
+    - Uses `SharedPreferences` to store data locally for offline support.
+    - Uses `Dio` to handel data from json
+    - Uses `connectivity_plus` to check internet connection 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## **Contributors**
+- [AhmedRoshdy](https://github.com/ARoshdy123)
+- [Marina](https://github.com/ARoshdy123)
+- [Osama](https://github.com)
