@@ -28,7 +28,7 @@ class UserService {
       }
     }
 
-    // get users from cached data
+    // get users from  cached data
     else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("No Internet Connection")));
