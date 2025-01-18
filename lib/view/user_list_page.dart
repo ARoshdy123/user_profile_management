@@ -68,8 +68,9 @@ class UserListPageState extends State<UserListPage> {
         itemCount: cachedUsers.length,
         itemBuilder: (context, index) {
           final user = cachedUsers[index];
-          return ListTile(leading: Text("${user.id}"),
+          return ListTile(
               trailing: Icon(Icons.person),
+              leading: Text("${user.id}"),
               title: Text(user.name),
               subtitle: Text(user.email),
               onTap: () {}
@@ -84,7 +85,7 @@ class UserListPageState extends State<UserListPage> {
       ),
       floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
           onPressed: (){} /// todo navigateToAddUser,
-        ///todo child: Icon(Icons.add),
+
       ),
     );
   }
