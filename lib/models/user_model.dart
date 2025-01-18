@@ -11,20 +11,14 @@ class Users {
   String name;
   String username;
   String email;
-  Address address;
-  String phone;
-  String website;
-  Company company;
+
 
   Users({
     required this.id,
     required this.name,
     required this.username,
     required this.email,
-    required this.address,
-    required this.phone,
-    required this.website,
-    required this.company,
+
   });
 
   factory Users.fromJson(Map<String, dynamic> json) => Users(
@@ -32,10 +26,7 @@ class Users {
     name: json["name"],
     username: json["username"],
     email: json["email"],
-    address: Address.fromJson(json["address"]),
-    phone: json["phone"],
-    website: json["website"],
-    company: Company.fromJson(json["company"]),
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -43,10 +34,8 @@ class Users {
     "name": name,
     "username": username,
     "email": email,
-    "address": address.toJson(),
-    "phone": phone,
-    "website": website,
-    "company": company.toJson(),
+
+
   };
 }
 

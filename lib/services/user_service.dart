@@ -8,15 +8,18 @@ import 'package:user_profile_management/services/check_internet.dart';
 class UserService {
   String endpoint = "https://jsonplaceholder.typicode.com/users";
   final dio = Dio();
-  Future<List<Users>> getUsers(BuildContext context) async {
+
+  Future<List<Users>> getUsers(context) async {
+    final prefs = await SharedPreferences.getInstance();
     List<Users> cachedUsers = [];
     bool isConnected = await InternetChecker.checkNetwork();
-    if (isConnected) {
+   var data = prefs.getString("UserData") ;
+    if (isConnected  && data == null) {
       try {
         var response = await dio.get(endpoint);
         var data = response.data;
         var cachedData = jsonEncode(data);
-        final prefs = await SharedPreferences.getInstance();
+
         await prefs.setString("UserData", cachedData);
         data.forEach((json) {
           Users user = Users.fromJson(json);
@@ -30,9 +33,7 @@ class UserService {
 
     // get users from  cached data
     else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("No Internet Connection")));
-      final prefs = await SharedPreferences.getInstance();
+            final prefs = await SharedPreferences.getInstance();
       String data = prefs.getString("UserData") ?? '';
       if (data.isNotEmpty) {
         var jsonData = jsonDecode(data);
@@ -44,22 +45,76 @@ class UserService {
     return cachedUsers;
   }
 
-  Future<void>deleteUser(BuildContext context, String userId) async {
+  Future<void> deleteUser(BuildContext context, String userId) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      String data = prefs.getString("UserData") ?? '';
+      String data = prefs.getString("UserData") ?? '[]';
       var jsonData = jsonDecode(data);
-      var response = await dio.delete("https://jsonplaceholder.typicode.com/users/$userId",
+
+      // Remove the user from cached data as we are using dummy Api
+      jsonData.removeWhere((user) => user['id'].toString() == userId);
+      await prefs.setString("UserData", jsonEncode(jsonData));
+
+
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: Unable to delete user$e")),
       );
-      if (response.statusCode == 200 || response.statusCode == 204) {
+    }
+  }
+
+// addUser service
+
+  Future<void> addUser(context,Users user) async {
+    try {
+      var response = await dio.post(endpoint, data: user.toJson());
+      if (response.statusCode == 201) {
+        // To Save the new user in cached data as we are using dummy api
+        final prefs = await SharedPreferences.getInstance();
+        String data = prefs.getString("UserData") ?? '[]';
+
+        var jsonData = jsonDecode(data) as List;
+        jsonData.add(user.toJson());
+        await prefs.setString("UserData", jsonEncode(jsonData));
+
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("User deleted successfully")));
+            .showSnackBar(SnackBar(content: Text("User added successfully")));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Failed to delete user: ${response.statusCode}")));
+            content: Text("Failed to add user: ${response.statusCode}")));
       }
     } catch (e) {
-      print(e.toString());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Error: $e")));
+    }
+  }
+
+  // update user
+
+  Future<void> updateUser(context, Users user) async {
+    try {
+      var response = await dio.put("$endpoint/${user.id}", data: user.toJson());
+      if (response.statusCode == 200) {
+        // Update the user in cached data
+        final prefs = await SharedPreferences.getInstance();
+        String data = prefs.getString("UserData") ?? '[]';
+
+        var jsonData = jsonDecode(data) as List;
+        int index = jsonData.indexWhere((element) => element["id"] == user.id);
+        if (index != -1) {
+          jsonData[index] = user.toJson();
+          await prefs.setString("UserData", jsonEncode(jsonData));
+        }
+
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("User updated successfully")));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Failed to update user: ${response.statusCode}")));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Error: $e")));
     }
   }
 }

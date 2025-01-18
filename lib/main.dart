@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:user_profile_management/view/user_list_page.dart';
+
+import 'view/user_list_page.dart';
 
 void main() {
   runApp(UserProfileManagement());
