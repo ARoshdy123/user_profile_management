@@ -11,7 +11,6 @@ class UserProfileManagement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       title: 'User Profile Management',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
